@@ -16,7 +16,7 @@ namespace
         auto matchers = AllOf(substring_matcher_1, substring_matcher_2);
 
         EXPECT_THAT(
-            [&](){ 
+            [&]() { 
                 Networking::Common::ValidateIpAddress(test_ip); 
             }, 
             ThrowsMessage<std::runtime_error>(matchers));

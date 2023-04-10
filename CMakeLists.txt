@@ -9,15 +9,20 @@ find_package(GTest REQUIRED)
 add_library(Common STATIC "src/common/StringUtils.cpp")
 target_include_directories(Common PRIVATE "include")
 
-add_library(Networking STATIC "src/networking/Common.cpp")
+add_library(Networking STATIC 
+    "src/networking/Common.cpp"
+    "src/networking/Endpoint.cpp"
+    "src/networking/EndpointBuilder.cpp")
 target_include_directories(Networking PRIVATE "include")
 
 
 ### Tests ###
+# TODO: Look into `gtest_add_tests` for automatic test pickup
 enable_testing()
 
 add_executable(StringUtilsTest "test/common/StringUtilsTest.cpp")
-target_link_libraries(StringUtilsTest Common 
+target_link_libraries(StringUtilsTest 
+    Common 
     GTest::gtest 
     GTest::gtest_main 
     GTest::gmock 
@@ -25,12 +30,15 @@ target_link_libraries(StringUtilsTest Common
 target_include_directories(StringUtilsTest PRIVATE "include")
 add_test(NAME StringUtils COMMAND StringUtilsTest)
 
-add_executable(NetworkingCommonTest "test/networking/CommonTest.cpp")
-target_link_libraries(NetworkingCommonTest Networking 
+add_executable(NetworkingTest
+    "test/networking/CommonTest.cpp"
+    "test/networking/EndpointTest.cpp")
+target_link_libraries(NetworkingTest 
+    Networking 
     GTest::gtest 
     GTest::gtest_main 
     GTest::gmock 
     GTest::gmock_main
     Common)
-target_include_directories(NetworkingCommonTest PRIVATE "include")
-add_test(NAME NetworkingCommon COMMAND NetworkingCommonTest)
+target_include_directories(NetworkingTest PRIVATE "include")
+add_test(NAME NetworkingCommon COMMAND NetworkingTest)
