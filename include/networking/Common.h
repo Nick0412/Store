@@ -2,6 +2,7 @@
 #define NETWORKING_COMMON_H
 
 #include <string>
+#include <vector>
 
 namespace Networking::Common
 {
