@@ -5,7 +5,7 @@
 
 namespace Common::Types
 {
-    using ByteVector = std::vector<std::byte>;
+    using ByteVector = std::vector<std::uint8_t>;
 }
 
 #endif
