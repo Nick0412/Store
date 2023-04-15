@@ -46,4 +46,5 @@ namespace Messages::MessageHelper
         
         std::copy(str.begin(), str.end(), offset_iterator);
     }
+
 }
