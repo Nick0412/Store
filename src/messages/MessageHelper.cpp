@@ -1,5 +1,6 @@
 #include "messages/MessageHelper.h"
 #include "common/Platform.h"
+#include "messages/Constants.h"
 
 namespace Messages::MessageHelper
 {
@@ -8,13 +9,8 @@ namespace Messages::MessageHelper
         // TODO: Check that the byte buffer is large enough
 
         // Convert to a known size as std::size_t is variable on systems.
-        std::uint32_t size_bytes_uint32 = static_cast<uint32_t>(size_bytes);
-        std::uint32_t size_bytes_network_order = Common::Platform::NetworkByteOrderLong(size_bytes_uint32);
-
-        byte_buffer[0] = size_bytes_network_order & 0xFF;
-        byte_buffer[1] = (size_bytes_network_order >> 8) & 0xFF;
-        byte_buffer[2] = (size_bytes_network_order >> 16) & 0xFF;
-        byte_buffer[3] = (size_bytes_network_order >> 24) & 0xFF;
+        std::uint32_t size_bytes_converted = static_cast<uint32_t>(size_bytes);
+        place32BitValueInByteBuffer(byte_buffer, Messages::Constants::MESSAGE_SIZE_OFFSET, size_bytes_converted);
     }
 
     void placeMessageTypeInByteBuffer(Common::Types::ByteVector& byte_buffer, MessageType message_type)
@@ -28,5 +24,20 @@ namespace Messages::MessageHelper
         byte_buffer[5] = (message_type_network_order >> 8) & 0xFF;
         byte_buffer[6] = (message_type_network_order >> 16) & 0xFF;
         byte_buffer[7] = (message_type_network_order >> 24) & 0xFF;
+
+        place32BitValueInByteBuffer(byte_buffer, Messages::Constants::MESSAGE_TYPE_OFFSET, message_type_converted);
     }
+
+    void place32BitValueInByteBuffer(Common::Types::ByteVector& byte_buffer, std::size_t offset, std::uint32_t value)
+    {
+        // TODO: Check for out of bounds and size of buffer
+
+        std::uint32_t value_network_order = Common::Platform::NetworkByteOrderLong(value);
+
+        byte_buffer[offset] = value_network_order & 0xFF;
+        byte_buffer[offset + 1] = (value_network_order >> 8) & 0xFF;
+        byte_buffer[offset + 2] = (value_network_order >> 16) & 0xFF;
+        byte_buffer[offset + 3] = (value_network_order >> 24) & 0xFF;
+    }
+
 }
