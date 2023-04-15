@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(GTest REQUIRED)
 
+# TODO: Consider breaking this up into multiple CMAKE files for readability
+# or defien macros to glob files into targets more easily/nicely
+
 ### Libraries ###
 add_library(Common STATIC "src/common/StringUtils.cpp")
 target_include_directories(Common PRIVATE "include")
@@ -14,6 +17,12 @@ add_library(Networking STATIC
     "src/networking/Endpoint.cpp"
     "src/networking/EndpointBuilder.cpp")
 target_include_directories(Networking PRIVATE "include")
+target_link_libraries(Networking Common)
+
+add_library(Messages STATIC
+    "src/messages/MessageHelper.cpp")
+target_include_directories(Messages PRIVATE "include")
+target_link_libraries(Messages Common)
 
 
 ### Tests ###
@@ -42,3 +51,13 @@ target_link_libraries(NetworkingTest
     Common)
 target_include_directories(NetworkingTest PRIVATE "include")
 add_test(NAME NetworkingCommon COMMAND NetworkingTest)
+
+add_executable(MessagesTest "test/messages/MessageHelperTest.cpp")
+target_link_libraries(MessagesTest 
+    Messages 
+    GTest::gtest 
+    GTest::gtest_main 
+    GTest::gmock 
+    GTest::gmock_main)
+target_include_directories(MessagesTest PRIVATE "include")
+add_test(NAME MessageTestName COMMAND MessagesTest)
