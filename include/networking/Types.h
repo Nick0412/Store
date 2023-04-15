@@ -6,7 +6,6 @@
 
 namespace Networking::Types
 {
-    using ByteVector = std::vector<std::byte>;
     using SocketHandle = int;
 }
 
