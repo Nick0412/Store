@@ -1,6 +1,7 @@
 #include "messages/MessageHelper.h"
 #include "common/Platform.h"
 #include "messages/Constants.h"
+#include "messages/Constants.h"
 
 namespace Messages::MessageHelper
 {
@@ -9,6 +10,8 @@ namespace Messages::MessageHelper
         // TODO: Check that the byte buffer is large enough
 
         // Convert to a known size as std::size_t is variable on systems.
+        std::uint32_t size_bytes_converted = static_cast<uint32_t>(size_bytes);
+        place32BitValueInByteBuffer(byte_buffer, Messages::Constants::MESSAGE_SIZE_OFFSET, size_bytes_converted);
         std::uint32_t size_bytes_converted = static_cast<uint32_t>(size_bytes);
         place32BitValueInByteBuffer(byte_buffer, Messages::Constants::MESSAGE_SIZE_OFFSET, size_bytes_converted);
     }
