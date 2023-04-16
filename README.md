@@ -1,5 +1,5 @@
 ### Requirements
-- A C/C++ Compiler: GCC, Cland
+- A C/C++ Compiler: GCC, Clang
 - CMake
 
 ### Build Instructions
