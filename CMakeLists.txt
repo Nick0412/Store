@@ -3,7 +3,6 @@ project(Store)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# find_package(GTest REQUIRED)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -19,8 +18,11 @@ FetchContent_MakeAvailable(googletest)
 # or defien macros to glob files into targets more easily/nicely
 
 ### Libraries ###
-add_library(Common STATIC "src/common/StringUtils.cpp")
+add_library(Common STATIC "src/common/StringUtils.cpp" "src/common/Platform.cpp")
 target_include_directories(Common PRIVATE "include")
+if(WIN32)
+   target_link_libraries(Common ws2_32)
+endif()
 
 add_library(Networking STATIC 
     "src/networking/Common.cpp"

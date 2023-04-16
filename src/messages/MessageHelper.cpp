@@ -1,5 +1,5 @@
 #include "messages/MessageHelper.h"
-#include <arpa/inet.h>
+#include "common/Platform.h"
 
 namespace Messages::MessageHelper
 {
@@ -9,7 +9,7 @@ namespace Messages::MessageHelper
 
         // Convert to a known size as std::size_t is variable on systems.
         std::uint32_t size_bytes_uint32 = static_cast<uint32_t>(size_bytes);
-        std::uint32_t size_bytes_network_order = htonl(size_bytes_uint32);
+        std::uint32_t size_bytes_network_order = Common::Platform::NetworkByteOrderLong(size_bytes_uint32);
 
         byte_buffer[0] = size_bytes_network_order & 0xFF;
         byte_buffer[1] = (size_bytes_network_order >> 8) & 0xFF;
@@ -22,7 +22,7 @@ namespace Messages::MessageHelper
         // TODO: Check that buffer is large enough to type bytes
 
         std::uint32_t message_type_converted = static_cast<std::uint32_t>(message_type);
-        std::uint32_t message_type_network_order = htonl(message_type_converted);
+        std::uint32_t message_type_network_order = Common::Platform::NetworkByteOrderLong(message_type_converted);
 
         byte_buffer[4] = message_type_network_order & 0xFF;
         byte_buffer[5] = (message_type_network_order >> 8) & 0xFF;
