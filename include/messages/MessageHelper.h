@@ -3,12 +3,15 @@
 
 #include "common/Types.h"
 #include "MessageType.h"
+#include <string>
 
 namespace Messages::MessageHelper
-{
+{   
+    // TODO: Consider helper writer class that keeps track of index where it is writing.
     void placeMessageSizeInByteBuffer(Common::Types::ByteVector& byte_buffer, std::size_t size_bytes);
     void placeMessageTypeInByteBuffer(Common::Types::ByteVector& byte_buffer, MessageType message_type);
     void place32BitValueInByteBuffer(Common::Types::ByteVector& byte_buffer, std::size_t offset, std::uint32_t value);
+    void placeStringInByteBuffer(Common::Types::ByteVector& byte_buffer, std::size_t offset, std::string str);
 }
 
 

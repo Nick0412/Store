@@ -14,6 +14,8 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+# TODO: Set output paths to separate static libs, dynamic libs, and executables.
+
 # TODO: Consider breaking this up into multiple CMAKE files for readability
 # or defien macros to glob files into targets more easily/nicely
 

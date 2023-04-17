@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/homebrew/Cellar/**"
+                // "/opt/homebrew/Cellar/googletest/**"
             ],
             "defines": [],
             "macFrameworkPath": [

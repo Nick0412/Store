@@ -40,4 +40,10 @@ namespace Messages::MessageHelper
         byte_buffer[offset + 3] = (value_network_order >> 24) & 0xFF;
     }
 
+    void placeStringInByteBuffer(Common::Types::ByteVector& byte_buffer, std::size_t offset, std::string str)
+    {
+        auto offset_iterator = byte_buffer.begin() + offset;
+        
+        std::copy(str.begin(), str.end(), offset_iterator);
+    }
 }
