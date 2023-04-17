@@ -41,3 +41,14 @@ TEST(MessageHelper, Place32BitValueInByteBuffer_Success)
     EXPECT_EQ(buffer[4], 0xBA);
     EXPECT_EQ(buffer[5], 0x98);
 }
+
+TEST(MessageHelper, PlaceStringInByteBuffer_Success)
+{
+    std::string test_string = "bla";
+    Common::Types::ByteVector buffer = {'1', '2', '3', '4', '5'};
+
+    Messages::MessageHelper::placeStringInByteBuffer(buffer, 1, test_string);
+
+    Common::Types::ByteVector expected = {'1', 'b', 'l', 'a', '5'};
+    EXPECT_EQ(buffer, expected);
+}
