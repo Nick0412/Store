@@ -25,7 +25,7 @@ namespace Messages::MessageHelper
     {
         // TODO: Check for out of bounds and size of buffer
 
-        std::uint32_t value_network_order = Common::Platform::NetworkByteOrderLong(value);
+        std::uint32_t value_network_order = htonl(value);
 
         byte_buffer[offset] = value_network_order & 0xFF;
         byte_buffer[offset + 1] = (value_network_order >> 8) & 0xFF;
@@ -36,7 +36,7 @@ namespace Messages::MessageHelper
     void placeStringInByteBuffer(Common::Types::ByteVector& byte_buffer, std::size_t offset, std::string str)
     {
         auto offset_iterator = byte_buffer.begin() + offset;
+        
         std::copy(str.begin(), str.end(), offset_iterator);
     }
-
 }
