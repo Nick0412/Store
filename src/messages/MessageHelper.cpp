@@ -1,6 +1,6 @@
 #include "messages/MessageHelper.h"
-#include <arpa/inet.h>
 #include "messages/Constants.h"
+#include "common/Platform.h"
 
 namespace Messages::MessageHelper
 {
