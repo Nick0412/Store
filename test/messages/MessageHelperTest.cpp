@@ -1,5 +1,6 @@
 #include "gtest/gtest.h"
 #include "messages/MessageHelper.h"
+#include <arpa/inet.h>
 
 TEST(MessageHelper, PlaceMessageSize_Success)
 {
@@ -51,4 +52,27 @@ TEST(MessageHelper, PlaceStringInByteBuffer_Success)
 
     Common::Types::ByteVector expected = {'1', 'b', 'l', 'a', '5'};
     EXPECT_EQ(buffer, expected);
+}
+
+TEST(MessageHelper, Get32BitValueFromByteBuffer_Success)
+{
+    Common::Types::ByteVector buffer = {0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54};
+
+    auto actual_value = Messages::MessageHelper::get32BitValueFromByteBuffer(buffer, 1);
+
+    // Bytes 1 through 4 in the buffer but reversed then converted to host order
+    std::uint32_t exepcted_value = ntohl(0x7698BADC);
+    EXPECT_EQ(exepcted_value, actual_value);
+}
+
+TEST(MessageHelper, Get32BitValueFromByteBuffer_SuccessAfterPlacement)
+{
+    Common::Types::ByteVector buffer{10};
+    std::uint32_t value = 3100200400;
+    auto offset = 3;
+
+    Messages::MessageHelper::place32BitValueInByteBuffer(buffer, offset, value);
+    auto actual_result = Messages::MessageHelper::get32BitValueFromByteBuffer(buffer, offset);
+
+    EXPECT_EQ(value, actual_result);
 }

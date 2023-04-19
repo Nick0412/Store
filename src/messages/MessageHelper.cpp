@@ -39,4 +39,16 @@ namespace Messages::MessageHelper
         
         std::copy(str.begin(), str.end(), offset_iterator);
     }
+
+    std::uint32_t get32BitValueFromByteBuffer(ConstBufferRef byte_buffer, std::size_t offset)
+    {
+        std::uint32_t value{};
+        value |= byte_buffer[offset];
+        value |= (byte_buffer[offset + 1] << 8);
+        value |= (byte_buffer[offset + 2] << 16);
+        value |= (byte_buffer[offset + 3] << 24);
+        value = ntohl(value);
+
+        return value;
+    }
 }

@@ -32,7 +32,8 @@ target_include_directories(Networking PRIVATE "include")
 target_link_libraries(Networking Common)
 
 add_library(Messages STATIC
-    "src/messages/MessageHelper.cpp")
+    "src/messages/MessageHelper.cpp"
+    "src/messages/PutMessageRequest.cpp")
 target_include_directories(Messages PRIVATE "include")
 target_link_libraries(Messages Common)
 
@@ -64,7 +65,9 @@ target_link_libraries(NetworkingTest
 target_include_directories(NetworkingTest PRIVATE "include")
 add_test(NAME NetworkingCommon COMMAND NetworkingTest)
 
-add_executable(MessagesTest "test/messages/MessageHelperTest.cpp")
+add_executable(MessagesTest 
+    "test/messages/MessageHelperTest.cpp"
+    "test/messages/PutMessageRequestTest.cpp")
 target_link_libraries(MessagesTest 
     Messages 
     GTest::gtest 
