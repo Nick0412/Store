@@ -4,12 +4,18 @@ project(Store)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 include(FetchContent)
 FetchContent_Declare(
   googletest
   # Specify the commit you depend on and update it regularly.
   URL https://github.com/google/googletest/archive/12a5852e451baabc79c63a86c634912c563d57bc.zip
 )
+
+include(TestFunctions)
+
+
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
@@ -44,37 +50,22 @@ target_link_libraries(Messages Common)
 # TODO: Look into `gtest_add_tests` for automatic test pickup
 enable_testing()
 
-add_executable(StringUtilsTest "test/common/StringUtilsTest.cpp")
-target_link_libraries(StringUtilsTest 
-    Common 
-    GTest::gtest 
-    GTest::gtest_main 
-    GTest::gmock 
-    GTest::gmock_main)
-target_include_directories(StringUtilsTest PRIVATE "include")
-add_test(NAME StringUtils COMMAND StringUtilsTest)
+add_complex_test(
+    NAME        "StringUtilsTest"
+    SOURCES     "test/common/StringUtilsTest.cpp"
+    LIBRARIES   "Common"
+)
 
-add_executable(NetworkingTest
-    "test/networking/CommonTest.cpp"
-    "test/networking/EndpointTest.cpp")
-target_link_libraries(NetworkingTest 
-    Networking 
-    GTest::gtest 
-    GTest::gtest_main 
-    GTest::gmock 
-    GTest::gmock_main
-    Common)
-target_include_directories(NetworkingTest PRIVATE "include")
-add_test(NAME NetworkingCommon COMMAND NetworkingTest)
+add_complex_test(
+    NAME        "NetworkingTest"
+    SOURCES     "test/networking/CommonTest.cpp"
+                "test/networking/EndpointTest.cpp"
+    LIBRARIES   "Networking"
+                "Common"
+)
 
-add_executable(MessagesTest 
-    "test/messages/MessageHelperTest.cpp"
-    "test/messages/PutMessageRequestTest.cpp")
-target_link_libraries(MessagesTest 
-    Messages 
-    GTest::gtest 
-    GTest::gtest_main 
-    GTest::gmock 
-    GTest::gmock_main)
-target_include_directories(MessagesTest PRIVATE "include")
-add_test(NAME MessageTestName COMMAND MessagesTest)
+add_complex_test(
+    NAME        "MessagesTest"
+    SOURCES     "test/messages/MessageHelperTest.cpp"
+    LIBRARIES   "Messages"
+)
