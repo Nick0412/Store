@@ -13,7 +13,6 @@ function(add_complex_test)
     endif()
 
     string(CONCAT TEST_TARGET "${CUSTOM_TEST_NAME}" "Target")
-    set(GTEST_LIBS)
     list(APPEND GTEST_LIBS GTest::gtest GTest::gtest_main GTest::gmock GTest::gmock_main)
 
     add_executable("${TEST_TARGET}" "${CUSTOM_TEST_SOURCES}")
