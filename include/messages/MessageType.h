@@ -7,7 +7,8 @@ namespace Messages
 {
     enum class MessageType : std::uint32_t
     {
-        PUT_MESSAGE = 1
+        PUT_MESSAGE = 1,
+        GET_MESSAGE = 2
     };
 }
 

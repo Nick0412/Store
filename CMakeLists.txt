@@ -45,7 +45,12 @@ target_include_directories(Messages PRIVATE "include")
 target_link_libraries(Messages Common)
 
 
-### Tests ###
+
+
+
+###################################################################################################
+#                                           TESTS SECTION 
+###################################################################################################
 # TODO: Look into `gtest_add_tests` for automatic test pickup
 enable_testing()
 
