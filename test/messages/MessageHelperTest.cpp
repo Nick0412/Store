@@ -52,3 +52,19 @@ TEST(MessageHelper, PlaceStringInByteBuffer_Success)
     Common::Types::ByteVector expected = {'1', 'b', 'l', 'a', '5'};
     EXPECT_EQ(buffer, expected);
 }
+
+TEST(MessageHelper, ExtractSizeAndType_Success)
+{
+    std::size_t size = 456;
+    Messages::MessageType message_type = Messages::MessageType::GET_MESSAGE;
+    Common::Types::ByteVector buffer(10);
+
+    Messages::MessageHelper::placeMessageSizeInByteBuffer(buffer, size);
+    Messages::MessageHelper::placeMessageTypeInByteBuffer(buffer, message_type);
+
+    auto actual_size = Messages::MessageHelper::ExtractMessageSizeFromByteBuffer(buffer);
+    auto actual_type = Messages::MessageHelper::ExtractMessageTypeFromByteBuffer(buffer);
+
+    EXPECT_EQ(actual_size, size);
+    EXPECT_EQ(actual_type, message_type);
+}
