@@ -67,4 +67,18 @@ namespace Messages::MessageHelper
 
         return static_cast<MessageType>(message_type);
     }
+
+    std::string ExtractStringFromByteBuffer(const Common::Types::ByteVector& byte_buffer, std::size_t offset, std::size_t string_size)
+    {
+        if (offset + string_size > byte_buffer.size())
+        {
+            throw std::runtime_error("Expected extracted string exceeds buffer size.");
+        }
+
+        auto string_start = byte_buffer.begin() + offset;
+        auto string_end = string_start + string_size;
+        std::string str{string_start, string_end};
+
+        return str;
+    }
 }
