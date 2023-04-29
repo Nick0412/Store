@@ -40,12 +40,14 @@ target_include_directories(Networking PRIVATE "include")
 target_link_libraries(Networking Common)
 
 add_library(Messages STATIC
-    "src/messages/MessageHelper.cpp")
+    "src/messages/MessageHelper.cpp"
+    "src/messages/GetMessageRequest.cpp"
+    "include/messages/MessageBase.h"
+    "include/messages/GetMessageRequest.h"
+    "include/messages/MessageHelper.h"
+    "include/messages/MessageType.h")
 target_include_directories(Messages PRIVATE "include")
 target_link_libraries(Messages Common)
-
-
-
 
 
 ###################################################################################################
@@ -57,19 +59,17 @@ enable_testing()
 add_complex_test(
     NAME        "StringUtilsTest"
     SOURCES     "test/common/StringUtilsTest.cpp"
-    LIBRARIES   "Common"
-)
+    LIBRARIES   "Common")
 
 add_complex_test(
     NAME        "NetworkingTest"
     SOURCES     "test/networking/CommonTest.cpp"
                 "test/networking/EndpointTest.cpp"
     LIBRARIES   "Networking"
-                "Common"
-)
+                "Common")
 
 add_complex_test(
     NAME        "MessagesTest"
     SOURCES     "test/messages/MessageHelperTest.cpp"
-    LIBRARIES   "Messages"
-)
+                "test/messages/GetMessageRequestTest.cpp"
+    LIBRARIES   "Messages")
