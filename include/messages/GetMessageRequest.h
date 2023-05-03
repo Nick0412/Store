@@ -1,5 +1,5 @@
-#ifndef PUT_MESSAGE_H
-#define PUT_MESSAGE_H
+#ifndef GET_MESSAGE_H
+#define GET_MESSAGE_H
 
 #include "MessageBase.h"
 #include <string>
@@ -9,11 +9,11 @@ namespace Messages
     /**
      * Represents a get message request. The data should be packed as so.
      * 
-     * Message Size    | Message Type   | Key Size    | Key Value
+     * Message Size    | Message Type   | Key Size    | Key Data
      * ------------------------------------------------------------
      * 4 Bytes         | 4 Bytes        | 4 Bytes     | ??? Bytes   
      * 
-     * The number of bytes for key value are given by key size.
+     * The number of bytes for key data are given by key size.
      */
     class GetMessageRequest : public MessageBase<GetMessageRequest>
     {

@@ -10,6 +10,7 @@ namespace Messages::Constants
 
     constexpr std::size_t MESSAGE_SIZE_OFFSET = 0;
     constexpr std::size_t MESSAGE_TYPE_OFFSET = 4;
+    // Data offset is meant to skip the size and type of the message.
     constexpr std::size_t MESSAGE_DATA_OFFSET = 8;
 }
 
