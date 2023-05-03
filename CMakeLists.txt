@@ -42,8 +42,10 @@ target_link_libraries(Networking Common)
 add_library(Messages STATIC
     "src/messages/MessageHelper.cpp"
     "src/messages/GetMessageRequest.cpp"
+    "src/messages/PutMessageRequest.cpp"
     "include/messages/MessageBase.h"
     "include/messages/GetMessageRequest.h"
+    "include/messages/PutMessageRequest.h"
     "include/messages/MessageHelper.h"
     "include/messages/MessageType.h")
 target_include_directories(Messages PRIVATE "include")
@@ -72,4 +74,5 @@ add_complex_test(
     NAME        "MessagesTest"
     SOURCES     "test/messages/MessageHelperTest.cpp"
                 "test/messages/GetMessageRequestTest.cpp"
+                "test/messages/PutMessageRequestTest.cpp"
     LIBRARIES   "Messages")
