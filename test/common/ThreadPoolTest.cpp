@@ -23,11 +23,6 @@ namespace
 
         auto actual = result.get();
 
-        std::cout << "A: " << a 
-                  << " B: " << b 
-                  << " Actual Result: " << actual
-                  << "\n";
-
         EXPECT_EQ(actual, expected);
     }
 }
