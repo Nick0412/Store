@@ -17,8 +17,17 @@ namespace
 
         Common::ThreadPool pool(1);
 
-        std::future<int> result = pool.submit(add(a, b));
+        std::function<int(int,int)> wrapped = add;
 
-        EXPECT_EQ(result.get(), expected);
+        std::future<int> result = pool.submit(wrapped, a, b);
+
+        auto actual = result.get();
+
+        std::cout << "A: " << a 
+                  << " B: " << b 
+                  << " Actual Result: " << actual
+                  << "\n";
+
+        EXPECT_EQ(actual, expected);
     }
 }

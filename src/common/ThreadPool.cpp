@@ -34,19 +34,4 @@ namespace Common {
             worker.join();
         }
     }
-
-    template<typename F, typename ...Args>
-    std::future<typename std::invoke_result<F(Args...)>::type> ThreadPool::submit(F&& f, Args&&... args)
-    {
-        using return_type = std::invoke_result<F(Args...)>::type;
-        // We need to make the task shared otherwise it will go out of scope when this function returns
-        auto task = std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
-        std::future<return_type> res = task->get_future();
-        {
-            const std::lock_guard<std::mutex> lock(queue_mutex);
-            task_queue.emplace_back([task] { (*task)(); });
-        }
-        worker_notification.notify_one();
-        return res;
-    }
 }

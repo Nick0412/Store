@@ -47,8 +47,28 @@ namespace Common {
         ThreadPool(std::size_t num_workers);
         ~ThreadPool();
 
-        template<typename F, typename ...Args>
-        std::future<typename std::invoke_result<F(Args...)>::type> submit(F&& f, Args&&... args);
+        /**
+         * 
+         * Helper template provided to us by type traits to get the result
+         * 
+         * template< class F, class... ArgTypes >
+         * using invoke_result_t = typename invoke_result<F, ArgTypes...>::type;
+         * 
+         * See this page for reference: https://en.cppreference.com/w/cpp/types/result_of
+         */
+        template <typename F, typename ...Args>
+        std::future<std::invoke_result_t<F, Args...>> submit(F&& f, Args&&... args)
+        {
+            using return_type = std::invoke_result_t<F, Args...>;
+            auto task = std::make_shared<std::packaged_task<return_type()>>(std::bind(std::forward<F>(f), std::forward<Args>(args)...));
+            std::future<return_type> res = task->get_future();
+            {
+                const std::lock_guard<std::mutex> lock(queue_mutex);
+                task_queue.emplace_back([task] { (*task)(); });
+            }
+            worker_notification.notify_one();
+            return res;
+        }
     };
 }
 
