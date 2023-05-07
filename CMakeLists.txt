@@ -23,10 +23,13 @@ FetchContent_MakeAvailable(googletest)
 # TODO: Set output paths to separate static libs, dynamic libs, and executables.
 
 # TODO: Consider breaking this up into multiple CMAKE files for readability
-# or defien macros to glob files into targets more easily/nicely
+# or define macros to glob files into targets more easily/nicely
 
 ### Libraries ###
-add_library(Common STATIC "src/common/StringUtils.cpp" "src/common/Platform.cpp")
+add_library(Common STATIC
+    "src/common/StringUtils.cpp"
+    "src/common/Platform.cpp"
+    "src/common/ThreadPool.cpp")
 target_include_directories(Common PRIVATE "include")
 if(WIN32)
    target_link_libraries(Common ws2_32)
@@ -63,6 +66,7 @@ enable_testing()
 add_complex_test(
     NAME        "StringUtilsTest"
     SOURCES     "test/common/StringUtilsTest.cpp"
+                "test/common/ThreadPoolTest.cpp"
     LIBRARIES   "Common")
 
 add_complex_test(
