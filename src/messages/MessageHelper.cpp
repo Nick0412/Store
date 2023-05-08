@@ -1,6 +1,7 @@
 #include "messages/MessageHelper.h"
 #include "messages/Constants.h"
 #include "common/Platform.h"
+#include <stdexcept>
 
 namespace Messages::MessageHelper
 {
