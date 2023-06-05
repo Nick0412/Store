@@ -2,6 +2,7 @@
 #define TYPES_H
 
 #include <vector>
+#include <cstdint>
 
 namespace Common::Types
 {
